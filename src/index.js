@@ -21,6 +21,8 @@ var player = null;
 function preload ()
 {
     this.load.atlas('player', 'assets/sprites/player/sheet.png', 'assets/sprites/player/sprites.json');
+    this.load.tilemapTiledJSON('map1', 'assets/maps/level1/map.json');
+    this.load.spritesheet('tiles', 'assets/maps/tiles.png', {frameWidth: 72, frameHeight: 72});
 }
 
 function update() {
@@ -50,6 +52,7 @@ function update() {
 
     // Disable player rotation.
     player.setAngularVelocity(0);
+    
 }
 
 function createInput(game) {
@@ -101,25 +104,57 @@ function createAnimations(animations) {
 function create ()
 {
     player = this.matter.add.sprite(400, 150, 'player');
-
     player.setBounce(0.2);
 
-    //game.cameras.main.startFollow(player);
-
-    this.matter.world.setBounds(0, -200, game.config.width, game.config.height + 200);
-
+    this.matter.world.createDebugGraphic();
+    
     keys = createInput(this);
 
     createAnimations(game.anims);
-    /*
-    this.tweens.add({
-        targets: logo,
-        y: 450,
-        duration: 2000,
-        ease: 'Power2',
-        yoyo: true,
-        loop: -1
-    });
-    */
 
+    this.map = this.make.tilemap({key: 'map1'});
+
+    var groundTiles = this.map.addTilesetImage('tiles');
+       
+    // create the ground layer
+   // this.groundLayer = this.map.createDynamicLayer('Ground', groundTiles, 0, 0);
+    this.groundLayer = this.map.createStaticLayer('Ground', groundTiles, 0, 0);
+   
+    this.matter.world.convertTilemapLayer(this.groundLayer);
+    var i, j;
+    var slopeLeftIndexes = [32, 35, 37, 46, 69, 114];
+    var slopeRightIndexes = [6, 9, 11, 33, 43, 103];
+
+    for (i = 0; i < this.groundLayer.width; i++) {
+        for (j = 0; j < this.groundLayer.height; j++) {
+            // Is set
+            var tile = this.groundLayer.getTileAt(i, j, true);
+
+            if (tile && tile.index >= 0) {
+                if (slopeLeftIndexes.indexOf(tile.index) != -1) {
+                    this.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 10, (j * tile.height) + tile.height / 2 + 10, tile.width * 2, tile.height, 1, {isStatic: true});
+                } else if (slopeRightIndexes.indexOf(tile.index) != -1) {
+                    this.matter.add.trapezoid(i * tile.width - ((1 * tile.width) / 6) + 10, (j * tile.height) + tile.height / 2 + 10, tile.width * 2, tile.height, 1, {isStatic: true});
+                } else {
+                    this.matter.add.rectangle(i * tile.width + tile.width / 2, j * tile.height + tile.height / 2, tile.width, tile.height, { isStatic: true });   
+                }
+            }
+            
+        }
+    }
+    
+    // enable collisions on the ground layer.
+    
+    
+    this.matter.world.setBounds(0, 0, this.groundLayer.width, this.groundLayer.height);
+    this.cameras.main.setBackgroundColor(0xccccff);
+
+    // set bounds so the camera won't go outside the game world
+    this.cameras.main.setBounds(0, 0, this.groundLayer.width, this.groundLayer.height);
+    // make the camera follow the player
+    this.cameras.main.startFollow(player);
+
+
+
+    // the player will collide with this layer
 }
