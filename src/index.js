@@ -35,7 +35,6 @@ function update() {
     if (verticalSpeed > -2.5 && verticalSpeed < 2.5) {
         verticalSpeed = 0;
     }
-    console.log("vertical speed" + verticalSpeed);
     if (keys.up.isDown && verticalSpeed == 0) {
         player.setVelocityY(-10);
         player.anims.play('jump', true); // play jump animation
@@ -121,10 +120,8 @@ function create ()
     var groundTiles = this.map.addTilesetImage('tiles');
        
     // create the ground layer
-   // this.groundLayer = this.map.createDynamicLayer('Ground', groundTiles, 0, 0);
     this.groundLayer = this.map.createStaticLayer('Ground', groundTiles, 0, 0);
    
-    this.matter.world.convertTilemapLayer(this.groundLayer);
     var i, j;
     var slopeLeftIndexes = [32, 35, 37, 46, 69, 114];
     var slopeRightIndexes = [6, 9, 11, 33, 43, 103];
@@ -136,7 +133,7 @@ function create ()
 
             if (tile && tile.index >= 0) {
                 if (slopeLeftIndexes.indexOf(tile.index) != -1) {
-                    this.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 10, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 2, tile.height, 1, {isStatic: true});
+                    this.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 9, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 2, tile.height, 1, {isStatic: true});
                 } else if (slopeRightIndexes.indexOf(tile.index) != -1) {
                     this.matter.add.trapezoid(i * tile.width - ((1 * tile.width) / 6) + 13, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 4, tile.height, 1, {isStatic: true});
                 } else {
