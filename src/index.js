@@ -26,12 +26,16 @@ function preload ()
 }
 
 function update() {
-    // Vertical stop
+    // Disable player rotation.
+    player.setAngularVelocity(0);
+    
+    // Vertical stop - need a better way to determine standing.
 
     var verticalSpeed = player.body.velocity.y;
-    if (verticalSpeed > -0.1 && verticalSpeed < 0.1) {
+    if (verticalSpeed > -2.5 && verticalSpeed < 2.5) {
         verticalSpeed = 0;
     }
+    console.log("vertical speed" + verticalSpeed);
     if (keys.up.isDown && verticalSpeed == 0) {
         player.setVelocityY(-10);
         player.anims.play('jump', true); // play jump animation
@@ -50,8 +54,6 @@ function update() {
         }
     }
 
-    // Disable player rotation.
-    player.setAngularVelocity(0);
     
 }
 
@@ -103,7 +105,15 @@ function createAnimations(animations) {
 
 function create ()
 {
-    player = this.matter.add.sprite(400, 150, 'player');
+    const shapes = {
+        "rectangle": [
+            [ {"x":114,"y":79}, {"x":87,"y":79}, {"x":87,"y":128}, {"x":114,"y":128} ]
+        ]
+    };
+    // We dont want the physics shape to be the whole sprite, so we will give a custom one instead.
+    player = this.matter.add.sprite(400, 150, 'player', null, {
+        shape: { type: 'fromVerts', verts: shapes.rectangle }});
+
     player.setBounce(0.2);
 
     this.matter.world.createDebugGraphic();
@@ -132,9 +142,9 @@ function create ()
 
             if (tile && tile.index >= 0) {
                 if (slopeLeftIndexes.indexOf(tile.index) != -1) {
-                    this.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 10, (j * tile.height) + tile.height / 2 + 10, tile.width * 2, tile.height, 1, {isStatic: true});
+                    this.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 10, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 3, tile.height, 1, {isStatic: true});
                 } else if (slopeRightIndexes.indexOf(tile.index) != -1) {
-                    this.matter.add.trapezoid(i * tile.width - ((1 * tile.width) / 6) + 10, (j * tile.height) + tile.height / 2 + 10, tile.width * 2, tile.height, 1, {isStatic: true});
+                    this.matter.add.trapezoid(i * tile.width - ((1 * tile.width) / 6) + 13, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 3, tile.height, 1, {isStatic: true});
                 } else {
                     this.matter.add.rectangle(i * tile.width + tile.width / 2, j * tile.height + tile.height / 2, tile.width, tile.height, { isStatic: true });   
                 }
