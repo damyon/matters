@@ -105,15 +105,9 @@ function createAnimations(animations) {
 
 function create ()
 {
-    const shapes = {
-        "rectangle": [
-            [ {"x":114,"y":79}, {"x":87,"y":79}, {"x":87,"y":128}, {"x":114,"y":128} ]
-        ]
-    };
-    // We dont want the physics shape to be the whole sprite, so we will give a custom one instead.
     player = this.matter.add.sprite(400, 150, 'player', null, {
-        shape: { type: 'fromVerts', verts: shapes.rectangle }});
-
+        shape: { type: 'rectangle', x: 0, y: 0, width:30, height:50 }});
+ 
     player.setBounce(0.2);
 
     this.matter.world.createDebugGraphic();
@@ -142,9 +136,9 @@ function create ()
 
             if (tile && tile.index >= 0) {
                 if (slopeLeftIndexes.indexOf(tile.index) != -1) {
-                    this.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 10, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 3, tile.height, 1, {isStatic: true});
+                    this.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 10, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 2, tile.height, 1, {isStatic: true});
                 } else if (slopeRightIndexes.indexOf(tile.index) != -1) {
-                    this.matter.add.trapezoid(i * tile.width - ((1 * tile.width) / 6) + 13, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 3, tile.height, 1, {isStatic: true});
+                    this.matter.add.trapezoid(i * tile.width - ((1 * tile.width) / 6) + 13, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 4, tile.height, 1, {isStatic: true});
                 } else {
                     this.matter.add.rectangle(i * tile.width + tile.width / 2, j * tile.height + tile.height / 2, tile.width, tile.height, { isStatic: true });   
                 }
