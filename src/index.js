@@ -1,5 +1,7 @@
 import 'phaser';
+import State from './state.js';
 
+var state = new State();
 var config = {
     type: Phaser.AUTO,
     width: 800,
@@ -20,17 +22,28 @@ var player = null;
 
 function preload ()
 {
+    state.preload(this);
+    /*
+
+
+    // Player preload
     this.load.atlas('player', 'assets/sprites/player/sheet.png', 'assets/sprites/player/sprites.json');
+
+    // Map preload
     this.load.tilemapTiledJSON('map1', 'assets/maps/level1/map.json');
     this.load.spritesheet('tiles', 'assets/maps/tiles.png', {frameWidth: 72, frameHeight: 72});
+    */
 }
 
 function update() {
+    state.getCurrentLevel().update(this);
+    /*
+    // Player update
     // Disable player rotation.
     player.setAngularVelocity(0);
     
+    // Input update
     // Vertical stop - need a better way to determine standing.
-
     var verticalSpeed = player.body.velocity.y;
     if (verticalSpeed > -2.5 && verticalSpeed < 2.5) {
         verticalSpeed = 0;
@@ -53,7 +66,7 @@ function update() {
         }
     }
 
-    
+    */
 }
 
 function createInput(game) {
@@ -104,17 +117,25 @@ function createAnimations(animations) {
 
 function create ()
 {
+    state.create(this);
+    /*
+    // Player create
     player = this.matter.add.sprite(400, 150, 'player', null, {
         shape: { type: 'rectangle', x: 0, y: 0, width:30, height:50 }});
  
     player.setBounce(0.2);
 
+    // World create
     this.matter.world.createDebugGraphic();
     
+    // Input create
     keys = createInput(this);
 
+    // GOOD!
+    // Player create
     createAnimations(game.anims);
 
+    // Map create
     this.map = this.make.tilemap({key: 'map1'});
 
     var groundTiles = this.map.addTilesetImage('tiles');
@@ -146,16 +167,14 @@ function create ()
     
     // enable collisions on the ground layer.
     
-    
     this.matter.world.setBounds(0, 0, this.groundLayer.width, this.groundLayer.height);
+
+    // Camera create
     this.cameras.main.setBackgroundColor(0xccccff);
 
     // set bounds so the camera won't go outside the game world
     this.cameras.main.setBounds(0, 0, this.groundLayer.width, this.groundLayer.height);
     // make the camera follow the player
     this.cameras.main.startFollow(player);
-
-
-
-    // the player will collide with this layer
+    */
 }
