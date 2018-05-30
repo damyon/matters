@@ -132,29 +132,5 @@ export default class MapLevel extends Level {
                 this.setSelectedLevel(previous[0], game);
             }
         }
-        /*
-        if (this.cursors.up.isDown && (playerSprite.body.onFloor() || playerSprite.body.touching.isDown)) {
-        
-            playerSprite.body.setVelocityY(-600);
-            playerSprite.anims.play('jump', true); // play walk animation
-            
-        } else if (this.cursors.left.isDown)
-        {
-            playerSprite.body.setVelocityX(-200); // move left
-            playerSprite.anims.play('walk', true); // play walk animation
-            playerSprite.flipX = true; // flip the sprite to the left
-        }
-        else if (this.cursors.right.isDown)
-        {
-            playerSprite.body.setVelocityX(200); // move right
-            playerSprite.anims.play('walk', true); // play walk animatio
-            playerSprite.flipX = false; // use the original sprite looking to the right
-        } else {
-            playerSprite.body.setVelocityX(0);
-            if (playerSprite.body.onFloor()) {
-                playerSprite.anims.play('idle', true);
-            }
-        } 
-        */ 
     }
 }

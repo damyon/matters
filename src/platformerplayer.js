@@ -3,18 +3,17 @@ import Player from './player.js';
 export default class PlatformerPlayer extends Player {
 
     createSprite(game) {
-        this.sprite = game.matter.add.sprite(300, 200, this.spriteName);
-        this.sprite.setBounce(0.2); // our player will bounce from items
-       // this.sprite.setCollideWorldBounds(true); // don't go out of the map    
-        
-        // small fix to our player images, we resize the physics body object slightly
-       // this.sprite.body.setSize(this.sprite.width, this.sprite.height-8);
+        var shape = {
+            shape: { type: 'rectangle', x: 0, y: 0, width:30, height:50 }
+        };
+        this.sprite = game.matter.add.sprite(300, 200, this.spriteName, null, shape);
+        this.sprite.setBounce(0.2); 
 
         return this.sprite;
     }
 
     startPhysics(game, groundLayer) {
-       // this.groundCollider = game.matter.add.collider(groundLayer, this.sprite);
+       
     }
 
     getSprite() {
@@ -80,6 +79,5 @@ export default class PlatformerPlayer extends Player {
     unload(game) {
         game.matter.world.remove(this.sprite);
         this.sprite.setVisible(false);
-       // this.groundCollider.destroy();
     }
 }
