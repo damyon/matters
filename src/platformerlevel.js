@@ -106,14 +106,15 @@ export default class PlatformerLevel extends Level {
                 var tile = this.groundLayer.getTileAt(i, j, true);
 
                 if (tile && tile.index >= 0) {
-                    var shape;
+                    var shape,
+                        options = {isStatic: true, label: this.groundLabel};
 
                     if (slopeLeftIndexes.indexOf(tile.index) != -1) {
-                        shape = game.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 9, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 2, tile.height, 1, {isStatic: true});
+                        shape = game.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 9, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 2, tile.height, 1, options);
                     } else if (slopeRightIndexes.indexOf(tile.index) != -1) {
-                        shape = game.matter.add.trapezoid(i * tile.width - ((1 * tile.width) / 6) + 13, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 4, tile.height, 1, {isStatic: true});
+                        shape = game.matter.add.trapezoid(i * tile.width - ((1 * tile.width) / 6) + 13, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 4, tile.height, 1, options);
                     } else {
-                        shape = game.matter.add.rectangle(i * tile.width + tile.width / 2, j * tile.height + tile.height / 2, tile.width, tile.height, { isStatic: true });   
+                        shape = game.matter.add.rectangle(i * tile.width + tile.width / 2, j * tile.height + tile.height / 2, tile.width, tile.height, options);   
                     }
                     this.geometry.push(shape);
                 }
@@ -207,7 +208,7 @@ export default class PlatformerLevel extends Level {
 
     constructor(name, description, state, x, y) {
         super(name, state);
-
+        this.groundLabel = 'Ground block';
         this.description = description;
         this.nextLevels = [];
         this.previousLevels = [];

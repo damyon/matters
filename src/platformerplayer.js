@@ -3,17 +3,54 @@ import Player from './player.js';
 export default class PlatformerPlayer extends Player {
 
     createSprite(game) {
-        var shape = {
-            shape: { type: 'rectangle', x: 0, y: 0, width:30, height:50 }
+        var options = {
+            shape: { type: 'rectangle', x: 0, y: 0, width:30, height:50 },
+            label: 'Platformer Player'
         };
-        this.sprite = game.matter.add.sprite(300, 200, this.spriteName, null, shape);
+        this.sprite = game.matter.add.sprite(300, 200, this.spriteName, null, options);
         this.sprite.setBounce(0.2); 
 
+        game.matter.world.on('collisionstart', this.collided, this);
         return this.sprite;
     }
 
+    isStanding() {
+        var diffX = Math.abs(this.sprite.x - this.lastStanding.x),
+            diffY = Math.abs(this.sprite.y - this.lastStanding.y);
+
+        var diff = diffX + diffY;
+
+        return diff < this.jumpFlex;
+    }
+
+    collided(event, bodyA, bodyB) {
+        var player = null,
+            ground = null;
+
+        if (bodyA.label == 'Platformer Player') {
+            player = bodyA;
+        }
+        if (bodyB.label == 'Platformer Player') {
+            player = bodyB;
+        }
+        if (bodyA.label == 'Ground block') {
+            ground = bodyA;
+        }
+        if (bodyB.label == 'Ground block') {
+            ground = bodyB;
+        }
+        
+        if (player != null && ground != null) {
+            if (player.position.y < ground.position.y) {
+                // Valid ground contact.
+                this.lastStanding = { x: player.position.x, y: player.position.y };
+            }
+        }
+    }
+
     startPhysics(game, groundLayer) {
-       
+       this.lastStanding = { x: 0, y: 0};
+       this.jumpFlex = 25;
     }
 
     getSprite() {
@@ -23,12 +60,9 @@ export default class PlatformerPlayer extends Player {
     update(game, input) {
         this.sprite.setAngularVelocity(0);
         // Input update
-        // Vertical stop - need a better way to determine standing.
-        var verticalSpeed = this.sprite.body.velocity.y;
-        if (verticalSpeed > -2.5 && verticalSpeed < 2.5) {
-            verticalSpeed = 0;
-        }
-        if (input.up.isDown && verticalSpeed == 0) {
+        
+        var standing = this.isStanding();
+        if (input.up.isDown && standing) {
             this.sprite.setVelocityY(-10);
             this.sprite.anims.play('jump', true); // play jump animation
         } else if (input.left.isDown) {
@@ -41,7 +75,7 @@ export default class PlatformerPlayer extends Player {
             this.sprite.flipX = false; // flip the sprite to the left
         } else {
             this.sprite.setVelocityX(0); // move right
-            if (verticalSpeed == 0) {
+            if (standing == 0) {
                 this.sprite.anims.play('idle', true); // play idle animation
             }
         }
