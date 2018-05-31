@@ -93,9 +93,10 @@ export default class PlatformerLevel extends Level {
         var groundTiles = this.map.addTilesetImage('tiles');
     
         this.geometry = [];
-        // create the ground layer
+        // create the layers
+        this.backgroundLayer = this.map.createStaticLayer('Background', groundTiles, 0, 0);
         this.groundLayer = this.map.createStaticLayer('Ground', groundTiles, 0, 0);
-    
+
         var i, j;
         var slopeLeftIndexes = [32, 35, 37, 46, 69, 114];
         var slopeRightIndexes = [6, 9, 11, 33, 43, 103];
@@ -139,6 +140,7 @@ export default class PlatformerLevel extends Level {
         // create a player in the level
         this.player = new PlatformerPlayer('player');
 
+        this.createGeometry(game);
         this.player.createSprite(game);
 
         this.player.startPhysics(game, this.groundLayer);
@@ -146,8 +148,7 @@ export default class PlatformerLevel extends Level {
         // create animations for player
         this.player.createAnimations(game.anims);
 
-        this.createGeometry(game);
-
+        
         this.createInput(game);
 
         this.createCamera(game);
