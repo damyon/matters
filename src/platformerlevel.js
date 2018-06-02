@@ -96,7 +96,8 @@ export default class PlatformerLevel extends Level {
         // create the layers
         this.backgroundLayer = this.map.createStaticLayer('Background', groundTiles, 0, 0);
         this.groundLayer = this.map.createStaticLayer('Ground', groundTiles, 0, 0);
-
+        this.lavaLayer = this.map.createStaticLayer('Lava', groundTiles, 0, 0);
+        
         var i, j;
         var slopeLeftIndexes = [32, 35, 37, 46, 69, 114];
         var slopeRightIndexes = [6, 9, 11, 33, 43, 103];
@@ -117,6 +118,21 @@ export default class PlatformerLevel extends Level {
                     } else {
                         shape = game.matter.add.rectangle(i * tile.width + tile.width / 2, j * tile.height + tile.height / 2, tile.width, tile.height, options);   
                     }
+                    this.geometry.push(shape);
+                }
+                
+            }
+        }
+        for (i = 0; i < this.lavaLayer.width; i++) {
+            for (j = 0; j < this.lavaLayer.height; j++) {
+                // Is set
+                var tile = this.lavaLayer.getTileAt(i, j, true);
+
+                if (tile && tile.index >= 0) {
+                    var shape,
+                        options = {isStatic: true, label: this.lavaLabel};
+
+                    shape = game.matter.add.rectangle(i * tile.width + tile.width / 2, j * tile.height + tile.height / 2, tile.width, tile.height/2, options);   
                     this.geometry.push(shape);
                 }
                 
@@ -156,12 +172,16 @@ export default class PlatformerLevel extends Level {
         this.createUI(game);
     }
 
+    endLevel(game) {
+        this.state.loadMapLevel(game, this);
+    }
+
     update(game) {
         this.player.update(game, this.cursors);
         
         // Exit the level.
-        if (this.cursors.escape.isDown) {
-            this.state.loadMapLevel(game, this);
+        if (this.cursors.escape.isDown || this.player.levelEnded()) {
+            this.endLevel(game);
         }
 
         // Talk a bunch!
@@ -210,6 +230,7 @@ export default class PlatformerLevel extends Level {
     constructor(name, description, state, x, y) {
         super(name, state);
         this.groundLabel = 'Ground block';
+        this.lavaLabel = 'Lava block';
         this.description = description;
         this.nextLevels = [];
         this.previousLevels = [];

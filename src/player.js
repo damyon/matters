@@ -2,6 +2,7 @@ export default class Player {
 
     constructor(spriteName) {
         this.spriteName = spriteName;
+        this.endLevel = false;
     }
 
     createSprite(game) {
@@ -14,6 +15,10 @@ export default class Player {
 
     createAnimations(animations) {
         throw new TypeError("Abstract!");
+    }
+
+    levelEnded() {
+        return this.endLevel;
     }
 
     getSprite() {

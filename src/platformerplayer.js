@@ -26,7 +26,9 @@ export default class PlatformerPlayer extends Player {
 
     collided(event, bodyA, bodyB) {
         var player = null,
-            ground = null;
+            ground = null,
+            world = null,
+            lava = null;
 
         if (bodyA.label == 'Platformer Player') {
             player = bodyA;
@@ -40,7 +42,23 @@ export default class PlatformerPlayer extends Player {
         if (bodyB.label == 'Ground block') {
             ground = bodyB;
         }
+        if (bodyA.label == 'Lava block') {
+            lava = bodyA;
+        }
+        if (bodyB.label == 'Lava block') {
+            lava = bodyB;
+        }
         
+        if (bodyA.mass == Infinity && ground == null) {
+            world = bodyA;
+        }
+        if (bodyB.mass == Infinity && ground == null) {
+            world = bodyB;
+        }
+
+        if (lava != null) {
+            this.endLevel = true;
+        }
         if (player != null && ground != null) {
             if (player.position.y < (ground.position.y) && (ground.bounds.min.x <= player.position.x <= ground.bounds.max.x)) {
                 // Valid ground contact.
@@ -75,8 +93,8 @@ export default class PlatformerPlayer extends Player {
             this.sprite.anims.play('walk', true); // play walk animation
             this.sprite.flipX = false; // flip the sprite to the left
         } else {
-            this.sprite.setVelocityX(0); // move right
-            if (standing == 0) {
+            this.sprite.setVelocityX(0);
+            if (standing) {
                 this.sprite.anims.play('idle', true); // play idle animation
             }
         }
