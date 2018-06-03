@@ -88,28 +88,18 @@ export default class PlatformerLevel extends Level {
         
     }
 
-    createGeometry(game) {
-        // Map create
-        var groundTiles = this.map.addTilesetImage('tiles');
-    
-        this.geometry = [];
-        // create the layers
-        this.backgroundLayer = this.map.createStaticLayer('Background', groundTiles, 0, 0);
-        this.groundLayer = this.map.createStaticLayer('Ground', groundTiles, 0, 0);
-        this.lavaLayer = this.map.createStaticLayer('Lava', groundTiles, 0, 0);
-        
+    createBlocks(layer, options, game) {
         var i, j;
         var slopeLeftIndexes = [32, 35, 37, 46, 69, 114];
         var slopeRightIndexes = [6, 9, 11, 33, 43, 103];
 
-        for (i = 0; i < this.groundLayer.width; i++) {
-            for (j = 0; j < this.groundLayer.height; j++) {
+        for (i = 0; i < layer.width; i++) {
+            for (j = 0; j < layer.height; j++) {
                 // Is set
-                var tile = this.groundLayer.getTileAt(i, j, true);
+                var tile = layer.getTileAt(i, j, true);
 
                 if (tile && tile.index >= 0) {
-                    var shape,
-                        options = {isStatic: true, label: this.groundLabel};
+                    var shape;
 
                     if (slopeLeftIndexes.indexOf(tile.index) != -1) {
                         shape = game.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 9, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 2, tile.height, 1, options);
@@ -123,22 +113,28 @@ export default class PlatformerLevel extends Level {
                 
             }
         }
-        for (i = 0; i < this.lavaLayer.width; i++) {
-            for (j = 0; j < this.lavaLayer.height; j++) {
-                // Is set
-                var tile = this.lavaLayer.getTileAt(i, j, true);
+    }
 
-                if (tile && tile.index >= 0) {
-                    var shape,
-                        options = {isStatic: true, label: this.lavaLabel};
-
-                    shape = game.matter.add.rectangle(i * tile.width + tile.width / 2, j * tile.height + tile.height / 2, tile.width, tile.height/2, options);   
-                    this.geometry.push(shape);
-                }
-                
-            }
-        }
+    createGeometry(game) {
+        // Map create
+        var groundTiles = this.map.addTilesetImage('tiles');
+    
+        this.geometry = [];
+        // create the layers
+        this.backgroundLayer = this.map.createStaticLayer('Background', groundTiles, 0, 0);
+        this.groundLayer = this.map.createStaticLayer('Ground', groundTiles, 0, 0);
+        this.lavaLayer = this.map.createStaticLayer('Lava', groundTiles, 0, 0);
+        this.platformLayer = this.map.createStaticLayer('Platforms', groundTiles, 0, 0);
         
+        var groundOptions = {isStatic: true, label: this.groundLabel};
+        this.createBlocks(this.groundLayer, groundOptions, game);
+
+        var lavaOptions = {isStatic: true, label: this.lavaLabel};
+        this.createBlocks(this.lavaLayer, lavaOptions, game);
+
+        var platformOptions = {isStatic: true, label: this.platformLabel};
+        this.createBlocks(this.platformLayer, platformOptions, game);
+
         // prevent access outside of world.
         
         game.matter.world.setBounds(0, 0, this.groundLayer.width, this.groundLayer.height);
@@ -231,6 +227,7 @@ export default class PlatformerLevel extends Level {
         super(name, state);
         this.groundLabel = 'Ground block';
         this.lavaLabel = 'Lava block';
+        this.platformLabel = 'Platform block';
         this.description = description;
         this.nextLevels = [];
         this.previousLevels = [];

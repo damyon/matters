@@ -7,11 +7,12 @@ export default class PlatformerPlayer extends Player {
             shape: { type: 'rectangle', x: 0, y: 0, width:30, height:50 },
             label: 'Platformer Player'
         };
+        this.playerSpriteOffset = 55;
         this.sprite = game.matter.add.sprite(300, 1000, this.spriteName, null, options);
         this.sprite.setBounce(0.2); 
 
-        //game.matter.world.on('collisionstart', this.collided, this);
-        game.matter.world.on('collisionactive', this.collided, this);
+        game.matter.world.on('collisionstart', this.collisionStart, this);
+        game.matter.world.on('collisionactive', this.collisionActive, this);
         return this.sprite;
     }
 
@@ -24,11 +25,40 @@ export default class PlatformerPlayer extends Player {
         return diff < this.jumpFlex;
     }
 
-    collided(event, bodyA, bodyB) {
+    collisionStart(event, bodyA, bodyB) {
+        var player = null, platform = null;
+
+        if (bodyA.label == 'Platform block') {
+            platform = bodyA;
+        }
+        if (bodyB.label == 'Platform block') {
+            platform = bodyB;
+        }
+        if (bodyA.label == 'Platformer Player') {
+            player = bodyA;
+        }
+        if (bodyB.label == 'Platformer Player') {
+            player = bodyB;
+        }
+        
+        if (platform != null && player != null) {
+            // Is the player moving up or down ?
+            if ((player.velocity.y <= 0) || (player.position.y > platform.position.y - this.playerSpriteOffset)) {
+                // Cancel this collision - only disallow on the way down.
+                var i = 0;
+                for (i = 0; i < event.pairs.length; i++) {
+                    event.pairs[i].isActive = false;
+                }
+            }
+        }
+    }
+
+    collisionActive(event, bodyA, bodyB) {
         var player = null,
             ground = null,
             world = null,
-            lava = null;
+            lava = null,
+            platform = null;
 
         if (bodyA.label == 'Platformer Player') {
             player = bodyA;
@@ -36,12 +66,26 @@ export default class PlatformerPlayer extends Player {
         if (bodyB.label == 'Platformer Player') {
             player = bodyB;
         }
+        
         if (bodyA.label == 'Ground block') {
             ground = bodyA;
         }
         if (bodyB.label == 'Ground block') {
             ground = bodyB;
         }
+
+        if (bodyA.label == 'Platform block') {
+            if (player.position.y < bodyA.position.y - this.playerSpriteOffset) {
+                ground = bodyA;
+            }
+        }
+        if (bodyB.label == 'Platform block') {
+            if (player.position.y < bodyB.position.y - this.playerSpriteOffset) {
+                ground = bodyB;
+            }
+        }
+
+
         if (bodyA.label == 'Lava block') {
             lava = bodyA;
         }
