@@ -8,6 +8,7 @@ export default class PlatformerLevel extends Level {
         game.load.tilemapTiledJSON('map' + this.name, this.levelFile);
         // tiles in spritesheet 
         game.load.spritesheet('tiles', 'assets/maps/tiles.png', {frameWidth: 72, frameHeight: 72});
+        game.load.spritesheet('rewards', 'assets/sprites/star/star.png', {frameWidth: 72, frameHeight: 72});
       
         game.load.atlas('player', 'assets/sprites/player/sheet.png', 'assets/sprites/player/sprites.json');
     }
@@ -118,6 +119,7 @@ export default class PlatformerLevel extends Level {
     createGeometry(game) {
         // Map create
         var groundTiles = this.map.addTilesetImage('tiles');
+        var rewardTiles = this.map.addTilesetImage('rewards');
     
         this.geometry = [];
         // create the layers
@@ -125,6 +127,7 @@ export default class PlatformerLevel extends Level {
         this.groundLayer = this.map.createStaticLayer('Ground', groundTiles, 0, 0);
         this.lavaLayer = this.map.createStaticLayer('Lava', groundTiles, 0, 0);
         this.platformLayer = this.map.createStaticLayer('Platforms', groundTiles, 0, 0);
+        this.rewardLayer = this.map.createStaticLayer('Rewards', rewardTiles, 0, 0)
         
         var groundOptions = {isStatic: true, label: this.groundLabel};
         this.createBlocks(this.groundLayer, groundOptions, game);
@@ -134,6 +137,9 @@ export default class PlatformerLevel extends Level {
 
         var platformOptions = {isStatic: true, label: this.platformLabel};
         this.createBlocks(this.platformLayer, platformOptions, game);
+
+        var rewardOptions = {isStatic: true, label: this.rewardLabel};
+        this.createBlocks(this.rewardLayer, rewardOptions, game);
 
         // prevent access outside of world.
         
@@ -228,6 +234,7 @@ export default class PlatformerLevel extends Level {
         this.groundLabel = 'Ground block';
         this.lavaLabel = 'Lava block';
         this.platformLabel = 'Platform block';
+        this.rewardLabel = 'Reward block';
         this.description = description;
         this.nextLevels = [];
         this.previousLevels = [];

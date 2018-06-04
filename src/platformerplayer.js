@@ -25,30 +25,53 @@ export default class PlatformerPlayer extends Player {
         return diff < this.jumpFlex;
     }
 
-    collisionStart(event, bodyA, bodyB) {
-        var player = null, platform = null;
+    cancelCollision(event, label) {
+        // Cancel this collision.
+        var i = 0;
+        for (i = 0; i < event.pairs.length; i++) {
+            if (event.pairs[i].bodyA.label == label || event.pairs[i].bodyB.label == label) {
+                event.pairs[i].isActive = false;
+            }
+        }
+    }
 
-        if (bodyA.label == 'Platform block') {
-            platform = bodyA;
+    collisionStart(event, bodyA, bodyB) {
+        var player = null, platform = null, reward = null;
+
+        var i = 0;
+        for (i = 0; i < event.pairs.length; i++) {
+            if (event.pairs[i].bodyA.label == 'Platform block') {
+                platform = event.pairs[i].bodyA;
+            }
+            if (event.pairs[i].bodyB.label == 'Platform block') {
+                platform = event.pairs[i].bodyB;
+            }
+            if (event.pairs[i].bodyA.label == 'Platformer Player') {
+                player = event.pairs[i].bodyA;
+            }
+            if (event.pairs[i].bodyB.label == 'Platformer Player') {
+                player = event.pairs[i].bodyB;
+            }
+    
+            
+            if (event.pairs[i].bodyA.label == 'Reward block') {
+                reward = event.pairs[i].bodyA;
+            }
+            if (event.pairs[i].bodyB.label == 'Reward block') {
+                reward = event.pairs[i].bodyB;
+            }
+            
         }
-        if (bodyB.label == 'Platform block') {
-            platform = bodyB;
-        }
-        if (bodyA.label == 'Platformer Player') {
-            player = bodyA;
-        }
-        if (bodyB.label == 'Platformer Player') {
-            player = bodyB;
+        // Test for collecting a reward.
+        if (reward != null) {
+            // Start by not colliding.
+            this.cancelCollision(event, 'Reward block');
         }
         
         if (platform != null && player != null) {
             // Is the player moving up or down ?
             if ((player.velocity.y <= 0) || (player.position.y > platform.position.y - this.playerSpriteOffset)) {
-                // Cancel this collision - only disallow on the way down.
-                var i = 0;
-                for (i = 0; i < event.pairs.length; i++) {
-                    event.pairs[i].isActive = false;
-                }
+                this.cancelCollision(event, 'Platform block');
             }
         }
     }
@@ -85,14 +108,13 @@ export default class PlatformerPlayer extends Player {
             }
         }
 
-
         if (bodyA.label == 'Lava block') {
             lava = bodyA;
         }
         if (bodyB.label == 'Lava block') {
             lava = bodyB;
         }
-        
+
         if (bodyA.mass == Infinity && ground == null) {
             world = bodyA;
         }
