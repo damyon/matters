@@ -16,7 +16,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="star.svg">
+   sodipodi:docname="star.svg"
+   inkscape:export-filename="/home/damyon/Documents/Phaser/matters/assets/sprites/star/star.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2">
     <linearGradient
@@ -44,7 +47,7 @@
        fx="7.4587679"
        fy="283.98318"
        r="8.6171712"
-       gradientTransform="matrix(1.6887309,6.7286805e-7,-5.5808941e-7,1.3901901,-5.9811094,-110.49063)"
+       gradientTransform="matrix(0.8443654,3.3643401e-7,-2.7904469e-7,0.69509502,1.6396541,88.889061)"
        gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
@@ -89,20 +92,20 @@
      transform="translate(0,-278.47915)">
     <path
        sodipodi:type="star"
-       style="opacity:1;fill:url(#radialGradient837);fill-opacity:1;stroke:#000000;stroke-width:0.26458332;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="opacity:1;fill:url(#radialGradient837);fill-opacity:1;stroke:#000000;stroke-width:0.13229166;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path821"
        sodipodi:sides="5"
        sodipodi:cx="9.260417"
-       sodipodi:cy="288.26875"
-       sodipodi:r1="8.8901567"
-       sodipodi:r2="3.8985915"
+       sodipodi:cy="288.26874"
+       sodipodi:r1="4.4450779"
+       sodipodi:r2="1.9492958"
        sodipodi:arg1="0.93324753"
        sodipodi:arg2="1.5615661"
        inkscape:flatsided="false"
        inkscape:rounded="0.24"
        inkscape:randomized="0"
-       d="m 14.552083,295.41249 c -1.191242,0.8824 -3.773284,-3.25901 -5.2556816,-3.24533 -1.4823972,0.0137 -3.9875517,4.20205 -5.1948791,3.34179 -1.2073273,-0.86026 1.9334911,-4.59569 1.4623915,-6.00131 -0.4710995,-1.40561 -5.22860763,-2.49388 -4.78353526,-3.90795 0.44507236,-1.41408 4.96824776,0.41871 6.15948946,-0.46369 1.1912417,-0.8824 0.7560945,-5.74336 2.2384916,-5.75704 1.4823974,-0.0137 1.1370554,4.85447 2.3443824,5.71473 1.207327,0.86027 5.6959,-1.0557 6.166999,0.34991 0.4711,1.40562 -4.265509,2.58152 -4.710581,3.99559 -0.445073,1.41408 2.764165,5.0909 1.572923,5.9733 z"
-       inkscape:transform-center-x="0.023579933"
-       inkscape:transform-center-y="-0.76657923" />
+       d="m 11.90625,291.84061 c -0.595621,0.4412 -1.886642,-1.6295 -2.6278408,-1.62266 -0.7411985,0.007 -1.9937756,2.10102 -2.5974392,1.67089 -0.6036636,-0.43013 0.9667452,-2.29784 0.7311955,-3.00065 -0.2355498,-0.70281 -2.6143034,-1.24694 -2.3917672,-1.95398 0.2225361,-0.70703 2.4841235,0.20936 3.0797443,-0.23184 0.5956207,-0.4412 0.3780473,-2.87168 1.1192458,-2.87852 0.7411985,-0.007 0.5685275,2.42724 1.1721916,2.85737 0.603663,0.43013 2.847949,-0.52786 3.083499,0.17495 0.235549,0.70281 -2.132754,1.29076 -2.355291,1.9978 -0.222536,0.70703 1.382083,2.54544 0.786462,2.98664 z"
+       inkscape:transform-center-x="0.011789965"
+       inkscape:transform-center-y="-0.38328961" />
   </g>
 </svg>
