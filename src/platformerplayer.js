@@ -10,10 +10,10 @@ export default class PlatformerPlayer extends Player {
         this.playerSpriteOffset = 55;
         this.sprite = game.matter.add.sprite(300, 1000, this.spriteName, null, options);
         this.sprite.setBounce(0.2); 
+        this.rewardsCollected = [];
 
         game.matter.world.on('collisionstart', this.collisionStart, this);
         game.matter.world.on('collisionactive', this.collisionActive, this);
-        return this.sprite;
     }
 
     isStanding() {
@@ -25,12 +25,47 @@ export default class PlatformerPlayer extends Player {
         return diff < this.jumpFlex;
     }
 
-    cancelCollision(event, label) {
+    collectReward(tile) {
+        var i, match = null;
+
+        for (i = 0; i < this.rewardsCollected.length; i++) {
+            if (this.rewardsCollected[i] == tile) {
+                match = this.rewardsCollected[i];
+            }
+        }
+        if (match == null) {
+            this.rewardsCollected.push(tile);
+            this.sprite.emit('scoreUpdated', this);
+        }
+    }
+
+    on(eventName, method) {
+        // Allow subscriptions to score updated events.
+        if (this.sprite) {
+            return this.sprite.on(eventName, method);
+        }
+        return false;
+    }
+
+    cancelCollision(event, label, collect) {
         // Cancel this collision.
         var i = 0;
         for (i = 0; i < event.pairs.length; i++) {
             if (event.pairs[i].bodyA.label == label || event.pairs[i].bodyB.label == label) {
                 event.pairs[i].isActive = false;
+            }
+            if (collect) {
+                var toHide = null;
+                if (event.pairs[i].bodyA.label == label) {
+                    toHide = event.pairs[i].bodyA;
+                }
+                if (event.pairs[i].bodyB.label == label) {
+                    toHide = event.pairs[i].bodyB;
+                }
+                if (toHide != null) {
+                    toHide.tile.visible = false;
+                    this.collectReward(toHide.tile);
+                }
             }
         }
     }
@@ -65,13 +100,13 @@ export default class PlatformerPlayer extends Player {
         // Test for collecting a reward.
         if (reward != null) {
             // Start by not colliding.
-            this.cancelCollision(event, 'Reward block');
+            this.cancelCollision(event, 'Reward block', true);
         }
         
         if (platform != null && player != null) {
             // Is the player moving up or down ?
             if ((player.velocity.y <= 0) || (player.position.y > platform.position.y - this.playerSpriteOffset)) {
-                this.cancelCollision(event, 'Platform block');
+                this.cancelCollision(event, 'Platform block', false);
             }
         }
     }
@@ -138,6 +173,10 @@ export default class PlatformerPlayer extends Player {
        this.jumpFlex = 25;
     }
 
+    getScore() {
+        return '' + this.rewardsCollected.length;
+    }
+
     getSprite() {
         return this.sprite;
     }
@@ -198,5 +237,6 @@ export default class PlatformerPlayer extends Player {
     unload(game) {
         game.matter.world.remove(this.sprite);
         this.sprite.setVisible(false);
+        this.rewardsCollected = [];
     }
 }

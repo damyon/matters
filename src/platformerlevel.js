@@ -52,17 +52,28 @@ export default class PlatformerLevel extends Level {
     }
 
     createUI(game) {
-        this.scoreText = game.add.text(20, 570, '0', {
-            fontSize: '20px',
-            fill: '#ffffff'
+        this.scoreText = game.add.text(680, 40, '0', {
+            fontSize: '30px',
+            fill: '#ffffff',
+            align: 'left'
         });
         this.scoreText.setScrollFactor(0);
+
+        this.scoreText.setShadow(1, 0, 'rgba(0,0,0,1.0)', 5);
+        //  We'll set the bounds to be from x0, y100 and be 800px wide by 100px high
+        this.scoreText.setOrigin(0.5);
+        
 
         this.talkText = game.add.text(20, 20, '', {
             fontSize: '20px',
             fill: '#000000'
         });
         this.talkText.setScrollFactor(0);
+    }
+
+    updateScoreText() {
+        var s = this.player.getScore() + ' / 10';
+        this.scoreText.setText(s);
     }
 
     createInput(game) {
@@ -101,7 +112,9 @@ export default class PlatformerLevel extends Level {
 
                 if (tile && tile.index >= 0) {
                     var shape;
-
+                    // Pass a reference to the tile and layer.
+                    options.tile = tile;
+                    options.layer = layer;
                     if (slopeLeftIndexes.indexOf(tile.index) != -1) {
                         shape = game.matter.add.trapezoid(i * tile.width + ((5 * tile.width) / 6) + 9, (j * tile.height) + tile.height / 2 + 12, tile.width * 2 + 2, tile.height, 1, options);
                     } else if (slopeRightIndexes.indexOf(tile.index) != -1) {
@@ -127,7 +140,7 @@ export default class PlatformerLevel extends Level {
         this.groundLayer = this.map.createStaticLayer('Ground', groundTiles, 0, 0);
         this.lavaLayer = this.map.createStaticLayer('Lava', groundTiles, 0, 0);
         this.platformLayer = this.map.createStaticLayer('Platforms', groundTiles, 0, 0);
-        this.rewardLayer = this.map.createStaticLayer('Rewards', rewardTiles, 0, 0)
+        this.rewardLayer = this.map.createDynamicLayer('Rewards', rewardTiles, 0, 0)
         
         var groundOptions = {isStatic: true, label: this.groundLabel};
         this.createBlocks(this.groundLayer, groundOptions, game);
@@ -160,7 +173,8 @@ export default class PlatformerLevel extends Level {
 
         this.createGeometry(game);
         this.player.createSprite(game);
-
+        this.player.on('scoreUpdated', this.updateScoreText.bind(this));
+       
         this.player.startPhysics(game, this.groundLayer);
 
         // create animations for player
@@ -172,6 +186,7 @@ export default class PlatformerLevel extends Level {
         this.createCamera(game);
 
         this.createUI(game);
+        this.updateScoreText();
     }
 
     endLevel(game) {
