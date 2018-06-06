@@ -7,7 +7,7 @@ export default class PlatformerLevel extends Level {
         // map made with Tiled in JSON format
         game.load.tilemapTiledJSON('map' + this.name, this.levelFile);
         // tiles in spritesheet 
-        game.load.spritesheet('tiles', 'assets/maps/tiles.png', {frameWidth: 72, frameHeight: 72});
+        game.load.spritesheet('tiles', 'assets/maps/tiles.png', {frameWidth: 70, frameHeight: 70, spacing: 2, margin: 0});
         game.load.spritesheet('rewards', 'assets/sprites/star/star.png', {frameWidth: 72, frameHeight: 72});
       
         game.load.atlas('player', 'assets/sprites/player/sheet.png', 'assets/sprites/player/sprites.json');
