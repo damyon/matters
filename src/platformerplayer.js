@@ -191,11 +191,15 @@ export default class PlatformerPlayer extends Player {
             this.sprite.anims.play('jump', true); // play jump animation
         } else if (input.left.isDown) {
             this.sprite.setVelocityX(-3); // move left
-            this.sprite.anims.play('walk', true); // play walk animation
+            if (standing) {
+                this.sprite.anims.play('walk', true); // play walk animation
+            }
             this.sprite.flipX = true; // flip the sprite to the left
         } else if (input.right.isDown) {
             this.sprite.setVelocityX(3); // move right
-            this.sprite.anims.play('walk', true); // play walk animation
+            if (standing) {
+                this.sprite.anims.play('walk', true); // play walk animation
+            }
             this.sprite.flipX = false; // flip the sprite to the left
         } else {
             this.sprite.setVelocityX(0);
