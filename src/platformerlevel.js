@@ -64,7 +64,7 @@ export default class PlatformerLevel extends Level {
         this.scoreText.setOrigin(0.5);
         
 
-        this.talkText = game.add.text(20, 20, '', {
+        this.talkText = game.add.text(320, 200, '', {
             fontSize: '20px',
             fill: '#000000'
         });
@@ -191,6 +191,10 @@ export default class PlatformerLevel extends Level {
 
     endLevel(game) {
         this.state.loadMapLevel(game, this);
+    }
+
+    isTalking() {
+        return this.talkQueue.length > 0 || (this.talkText.text != '');
     }
 
     update(game) {

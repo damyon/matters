@@ -13,7 +13,9 @@ export default class WelcomeLevel extends PlatformerLevel {
     }
 
     contactPirate() {
-        this.say("Arghh!");
+        if (!this.isTalking()) {
+            this.say("Arghh!");
+        }
     }
 
     create(game) {
