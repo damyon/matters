@@ -71,7 +71,7 @@ export default class PlatformerPlayer extends Player {
     }
 
     collisionStart(event, bodyA, bodyB) {
-        var player = null, platform = null, reward = null;
+        var player = null, platform = null, reward = null, sprite = null;
 
         var i = 0;
         for (i = 0; i < event.pairs.length; i++) {
@@ -95,8 +95,21 @@ export default class PlatformerPlayer extends Player {
             if (event.pairs[i].bodyB.label == 'Reward block') {
                 reward = event.pairs[i].bodyB;
             }
+
+            if (event.pairs[i].bodyA.gameObject && event.pairs[i].bodyA.gameObject.playerContactMethod) {
+                sprite = event.pairs[i].bodyA;
+            }
+            if (event.pairs[i].bodyB.gameObject && event.pairs[i].bodyB.gameObject.playerContactMethod) {
+                sprite = event.pairs[i].bodyB;
+            }
             
         }
+
+        if (sprite != null) {
+            sprite.gameObject.playerContactMethod();
+            this.cancelCollision(event, sprite.label, false);
+        }
+
         // Test for collecting a reward.
         if (reward != null) {
             // Start by not colliding.
@@ -184,7 +197,6 @@ export default class PlatformerPlayer extends Player {
     update(game, input) {
         this.sprite.setAngularVelocity(0);
         // Input update
-        
         var standing = this.isStanding();
         if (input.up.isDown && standing) {
             this.sprite.setVelocityY(-10);

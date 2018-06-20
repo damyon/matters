@@ -1,4 +1,5 @@
 import PlatformerLevel from './platformerlevel.js';
+import Sprite from './sprite.js';
 
 export default class WelcomeLevel extends PlatformerLevel {
     constructor(name, description, state, x, y) {
@@ -8,15 +9,22 @@ export default class WelcomeLevel extends PlatformerLevel {
 
     preload(game) {
         super.preload(game);
+        game.load.atlas('pirate', 'assets/sprites/person1/clean.png', 'assets/sprites/person1/sprites.json');
     }
 
-    characterTalk(sprite, tile) {
-        this.say("Cool I can talk!");
-        return false;
+    contactPirate() {
+        this.say("Arghh!");
     }
 
     create(game) {
         super.create(game);
+
+        // Custom character
+        this.pirate = new Sprite("pirate");
+        this.pirate.setPosition(600, 1100);
+        this.pirate.createSprite(game);
+        this.pirate.createAnimations(game.anims);
+        this.pirate.handlePlayerContact(this.contactPirate.bind(this));
     }
 
     unload(game) {
