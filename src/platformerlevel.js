@@ -64,15 +64,18 @@ export default class PlatformerLevel extends Level {
         this.scoreText.setOrigin(0.5);
         
 
-        this.talkText = game.add.text(320, 200, '', {
-            fontSize: '20px',
-            fill: '#000000'
+        this.talkText = game.add.text(200, 200, '', {
+            fontSize: '30px',
+            fill: '#ffffff',
+            align: 'left'
         });
+        this.talkText.setShadow(1, 0, 'rgba(0,0,0,1.0)', 5);
+        
         this.talkText.setScrollFactor(0);
     }
 
     updateScoreText() {
-        var s = this.player.getScore() + ' / 10';
+        var s = this.player.getScoreText();
         this.scoreText.setText(s);
     }
 

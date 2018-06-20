@@ -53,7 +53,8 @@ export default class Sprite extends Player {
     }
 
     unload(game) {
-        
+        game.matter.world.remove(this.sprite);
+        this.sprite.setVisible(false);
     }
 
     constructor(spriteName) {

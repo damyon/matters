@@ -186,8 +186,16 @@ export default class PlatformerPlayer extends Player {
        this.jumpFlex = 25;
     }
 
+    getTargetScore() {
+        return 10;
+    }
+
     getScore() {
-        return '' + this.rewardsCollected.length;
+        return this.rewardsCollected.length;
+    }
+
+    getScoreText() {
+        return this.getScore() + ' / ' + this.getTargetScore();
     }
 
     getSprite() {
