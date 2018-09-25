@@ -196,6 +196,21 @@ export default class PlatformerLevel extends Level {
         this.state.loadMapLevel(game, this);
     }
 
+    waitForTalking() {
+        let done = new Promise(function(resolve, reject) {
+            let checkIt = function() {
+                if (!this.isTalking()) {
+                    resolve(true);
+                } else {
+                    setTimeout(checkIt, 250);
+                }
+            }.bind(this);
+            
+            setTimeout(checkIt, 50);
+        }.bind(this));
+        return done;
+    }
+
     isTalking() {
         return this.talkQueue.length > 0 || (this.talkText.text != '');
     }

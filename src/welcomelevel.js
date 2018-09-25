@@ -12,7 +12,7 @@ export default class WelcomeLevel extends PlatformerLevel {
         game.load.atlas('pirate', 'assets/sprites/person1/clean.png', 'assets/sprites/person1/sprites.json');
     }
 
-    contactPirate() {
+    contactPirate(game) {
         if (!this.isTalking()) {
 
             if (this.player.getScore() < this.player.getTargetScore()) {
@@ -23,9 +23,10 @@ export default class WelcomeLevel extends PlatformerLevel {
                 this.say("Great!");
                 this.say("You got all the stars.");
                 this.say("Here is your door!");
+                this.waitForTalking().then(function() {
+                    this.state.collectTrophy("door", game);
+                }.bind(this));
             }
-
-
             
         }
     }
@@ -38,7 +39,7 @@ export default class WelcomeLevel extends PlatformerLevel {
         this.pirate.setPosition(3800, 1080);
         this.pirate.createSprite(game);
         this.pirate.createAnimations(game.anims);
-        this.pirate.handlePlayerContact(this.contactPirate.bind(this));
+        this.pirate.handlePlayerContact(this.contactPirate.bind(this, game));
     }
 
     unload(game) {

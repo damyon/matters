@@ -26,6 +26,7 @@ function preload ()
 }
 
 function update() {
+    state.update(this);
     state.getCurrentLevel().update(this);    
 }
 

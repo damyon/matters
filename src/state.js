@@ -2,6 +2,7 @@ import MapLevel from './maplevel.js';
 import PlatformerLevel from './platformerlevel.js'; 
 import WelcomeLevel from './welcomelevel.js'; 
 import BeachLevel from './beachlevel.js'; 
+import Trophy from './trophy.js';
 
 export default class State {
 
@@ -53,7 +54,37 @@ export default class State {
                 level.setIsPreloaded(true);
             }
         }
-        
+
+        var trophy = new Trophy("door", 50, 50);
+        trophy.preload(game);
+        trophy.setIsPreloaded(true);
+        this.allTrophies.push(trophy);
+    }
+
+    update(game) {
+    }
+
+
+    collectTrophy(name, game) {
+        var i, match = null;
+
+        for (i = 0; i < this.trophiesCollected.length; i++) {
+            if (this.trophiesCollected[i].name == name) {
+                match = this.trophiesCollected[i];
+            }
+        }
+        if (match == null) {
+            for (i = 0; i < this.allTrophies.length; i++) {
+                if (this.allTrophies[i].name == name) {
+                    match = this.allTrophies[i];
+                }
+            }
+            if (match) {
+                match.create(game);
+                this.trophiesCollected.push(match);
+                console.log('Got trophy ' + name);
+            }
+        }
     }
 
     create(game) {
@@ -64,6 +95,8 @@ export default class State {
     }
 
     constructor() {
+        this.trophiesCollected = [];
+        this.allTrophies = [];
         this.createLevels();
 
     }
