@@ -7,7 +7,7 @@ export default class MapLevel extends Level {
     }
 
     createInput(game) {
-        var codes = Phaser.Input.Keyboard.KeyCodes;
+        let codes = Phaser.Input.Keyboard.KeyCodes;
 
         this.keys = game.input.keyboard.addKeys({
             left: codes.LEFT,
@@ -38,23 +38,23 @@ export default class MapLevel extends Level {
     }
 
     createRoads(game) {
-        var i = 0;
+        let i = 0;
 
-        var platformerLevels = this.state.getPlatformerLevels();
-        var graphics = game.add.graphics();
+        let platformerLevels = this.state.getPlatformerLevels();
+        let graphics = game.add.graphics();
             
         // First draw the roads.
         for (i = 0; i < platformerLevels.length; i++) {
-            var level = platformerLevels[i];
-            var roadColour = 0x555555;
+            let level = platformerLevels[i];
+            let roadColour = 0x555555;
          
             if (level.getCompleted()) {
                 roadColour = 0xff9900;
             }
          
             // Connect the levels.
-            var nextLevels = level.getNextLevels();
-            var j;
+            let nextLevels = level.getNextLevels();
+            let j;
             
             // Draw the point for the level.
             graphics.lineStyle(10, roadColour);
@@ -62,8 +62,8 @@ export default class MapLevel extends Level {
             graphics.fillCircle(level.getX(), level.getY(), 10);
             
             for (j = 0; j < nextLevels.length; j++) {
-                var nextLevel = nextLevels[j];
-                var line = new Phaser.Geom.Line(level.getX(), level.getY(), nextLevel.getX(), nextLevel.getY());
+                let nextLevel = nextLevels[j];
+                let line = new Phaser.Geom.Line(level.getX(), level.getY(), nextLevel.getX(), nextLevel.getY());
                 graphics.strokeLineShape(line);
             }
         }
@@ -76,7 +76,7 @@ export default class MapLevel extends Level {
     }
 
     loadSelectedLevel() {
-        var platformerLevels = this.state.getPlatformerLevels();
+        let platformerLevels = this.state.getPlatformerLevels();
         // Remember the selected level.
         this.selectedLevel = platformerLevels[0];
     }
@@ -120,14 +120,14 @@ export default class MapLevel extends Level {
         }
 
         if (this.keys.right.isDown) {
-            var next = this.selectedLevel.getNextLevels();
+            let next = this.selectedLevel.getNextLevels();
             if (next.length > 0) {
                 this.setSelectedLevel(next[0], game);
             }
         }
 
         if (this.keys.left.isDown) {
-            var previous = this.selectedLevel.getPreviousLevels();
+            let previous = this.selectedLevel.getPreviousLevels();
             if (previous.length > 0) {
                 this.setSelectedLevel(previous[0], game);
             }

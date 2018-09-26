@@ -3,7 +3,7 @@ import Player from './player.js';
 export default class PlatformerPlayer extends Player {
 
     createSprite(game) {
-        var options = {
+        let options = {
             shape: { type: 'rectangle', x: 0, y: 0, width:30, height:50 },
             label: 'Platformer Player'
         };
@@ -17,16 +17,16 @@ export default class PlatformerPlayer extends Player {
     }
 
     isStanding() {
-        var diffX = Math.abs(this.sprite.x - this.lastStanding.x),
+        let diffX = Math.abs(this.sprite.x - this.lastStanding.x),
             diffY = Math.abs(this.sprite.y - this.lastStanding.y);
 
-        var diff = diffX + diffY;
+        let diff = diffX + diffY;
 
         return diff < this.jumpFlex;
     }
 
     collectReward(tile) {
-        var i, match = null;
+        let i, match = null;
 
         for (i = 0; i < this.rewardsCollected.length; i++) {
             if (this.rewardsCollected[i] == tile) {
@@ -49,13 +49,13 @@ export default class PlatformerPlayer extends Player {
 
     cancelCollision(event, label, collect) {
         // Cancel this collision.
-        var i = 0;
+        let i = 0;
         for (i = 0; i < event.pairs.length; i++) {
             if (event.pairs[i].bodyA.label == label || event.pairs[i].bodyB.label == label) {
                 event.pairs[i].isActive = false;
             }
             if (collect) {
-                var toHide = null;
+                let toHide = null;
                 if (event.pairs[i].bodyA.label == label) {
                     toHide = event.pairs[i].bodyA;
                 }
@@ -71,9 +71,9 @@ export default class PlatformerPlayer extends Player {
     }
 
     collisionStart(event, bodyA, bodyB) {
-        var player = null, platform = null, reward = null, sprite = null;
+        let player = null, platform = null, reward = null, sprite = null;
 
-        var i = 0;
+        let i = 0;
         for (i = 0; i < event.pairs.length; i++) {
             if (event.pairs[i].bodyA.label == 'Platform block') {
                 platform = event.pairs[i].bodyA;
@@ -125,7 +125,7 @@ export default class PlatformerPlayer extends Player {
     }
 
     collisionActive(event, bodyA, bodyB) {
-        var player = null,
+        let player = null,
             ground = null,
             world = null,
             lava = null,
@@ -205,7 +205,7 @@ export default class PlatformerPlayer extends Player {
     update(game, input) {
         this.sprite.setAngularVelocity(0);
         // Input update
-        var standing = this.isStanding();
+        let standing = this.isStanding();
         if (input.up.isDown && standing) {
             this.sprite.setVelocityY(-10);
             this.sprite.anims.play('jump', true); // play jump animation

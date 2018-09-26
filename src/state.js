@@ -29,6 +29,12 @@ export default class State {
         this.currentLevel = levelToLoad;
         
         this.currentLevel.create(game);
+
+        // Load all current trophies
+        let i = 0;
+        for (i = 0; i < this.trophiesCollected.length; i++) {
+            this.trophiesCollected[i].create(game);
+        }
     }
 
     getPlatformerLevels() {
@@ -40,7 +46,7 @@ export default class State {
     }
 
     preload(game) {
-        var i = 0;
+        let i = 0;
 
         if (!this.currentLevel.isPreloaded()) {
             this.currentLevel.preload(game);
@@ -48,14 +54,14 @@ export default class State {
         }
 
         for (i = 0; i < this.platformerLevels.length; i++) {
-            var level = this.platformerLevels[i];
+            let level = this.platformerLevels[i];
             if (!level.isPreloaded()) {
                 level.preload(game);
                 level.setIsPreloaded(true);
             }
         }
 
-        var trophy = new Trophy("door", 50, 50);
+        let trophy = new Trophy("door", 50, 50);
         trophy.preload(game);
         trophy.setIsPreloaded(true);
         this.allTrophies.push(trophy);
@@ -66,7 +72,7 @@ export default class State {
 
 
     collectTrophy(name, game) {
-        var i, match = null;
+        let i, match = null;
 
         for (i = 0; i < this.trophiesCollected.length; i++) {
             if (this.trophiesCollected[i].name == name) {
@@ -82,7 +88,6 @@ export default class State {
             if (match) {
                 match.create(game);
                 this.trophiesCollected.push(match);
-                console.log('Got trophy ' + name);
             }
         }
     }

@@ -9,7 +9,7 @@ export default class Sprite extends Player {
     }
 
     createSprite(game) {
-        var options = {
+        let options = {
             label: this.spriteName + ' Label',
             isStatic: true
         };

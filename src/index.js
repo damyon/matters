@@ -1,8 +1,8 @@
 import 'phaser';
 import State from './state.js';
 
-var state = new State();
-var config = {
+let state = new State();
+let config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
@@ -16,9 +16,9 @@ var config = {
     },
 };
 
-var game = new Phaser.Game(config);
-var keys = null;
-var player = null;
+let game = new Phaser.Game(config);
+let keys = null;
+let player = null;
 
 function preload ()
 {

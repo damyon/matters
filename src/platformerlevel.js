@@ -75,14 +75,14 @@ export default class PlatformerLevel extends Level {
     }
 
     updateScoreText() {
-        var s = this.player.getScoreText();
+        let s = this.player.getScoreText();
         this.scoreText.setText(s);
     }
 
     createInput(game) {
         // Use keyboard for input.
         
-        var codes = Phaser.Input.Keyboard.KeyCodes;
+        let codes = Phaser.Input.Keyboard.KeyCodes;
 
         this.cursors = game.input.keyboard.addKeys({
             escape: codes.ESC,
@@ -95,7 +95,7 @@ export default class PlatformerLevel extends Level {
     }
 
     fillBackground(game) {
-        var graphics = game.add.graphics();
+        let graphics = game.add.graphics();
         
         graphics.fillStyle(0xccccff);
 
@@ -104,17 +104,17 @@ export default class PlatformerLevel extends Level {
     }
 
     createBlocks(layer, options, game) {
-        var i, j;
-        var slopeLeftIndexes = [32, 35, 37, 46, 69, 114];
-        var slopeRightIndexes = [6, 9, 11, 33, 43, 103];
+        let i, j;
+        let slopeLeftIndexes = [32, 35, 37, 46, 69, 114];
+        let slopeRightIndexes = [6, 9, 11, 33, 43, 103];
 
         for (i = 0; i < layer.width; i++) {
             for (j = 0; j < layer.height; j++) {
                 // Is set
-                var tile = layer.getTileAt(i, j, true);
+                let tile = layer.getTileAt(i, j, true);
 
                 if (tile && tile.index >= 0) {
-                    var shape;
+                    let shape;
                     // Pass a reference to the tile and layer.
                     options.tile = tile;
                     options.layer = layer;
@@ -134,8 +134,8 @@ export default class PlatformerLevel extends Level {
 
     createGeometry(game) {
         // Map create
-        var groundTiles = this.map.addTilesetImage('tiles');
-        var rewardTiles = this.map.addTilesetImage('rewards');
+        let groundTiles = this.map.addTilesetImage('tiles');
+        let rewardTiles = this.map.addTilesetImage('rewards');
     
         this.geometry = [];
         // create the layers
@@ -145,16 +145,16 @@ export default class PlatformerLevel extends Level {
         this.platformLayer = this.map.createStaticLayer('Platforms', groundTiles, 0, 0);
         this.rewardLayer = this.map.createDynamicLayer('Rewards', rewardTiles, 0, 0)
         
-        var groundOptions = {isStatic: true, label: this.groundLabel};
+        let groundOptions = {isStatic: true, label: this.groundLabel};
         this.createBlocks(this.groundLayer, groundOptions, game);
 
-        var lavaOptions = {isStatic: true, label: this.lavaLabel};
+        let lavaOptions = {isStatic: true, label: this.lavaLabel};
         this.createBlocks(this.lavaLayer, lavaOptions, game);
 
-        var platformOptions = {isStatic: true, label: this.platformLabel};
+        let platformOptions = {isStatic: true, label: this.platformLabel};
         this.createBlocks(this.platformLayer, platformOptions, game);
 
-        var rewardOptions = {isStatic: true, label: this.rewardLabel};
+        let rewardOptions = {isStatic: true, label: this.rewardLabel};
         this.createBlocks(this.rewardLayer, rewardOptions, game);
 
         // prevent access outside of world.
@@ -224,10 +224,10 @@ export default class PlatformerLevel extends Level {
         }
 
         // Talk a bunch!
-        var maxTalkTime = 3000;
+        let maxTalkTime = 3000;
         if ((Date.now() - this.startTalkTime) > maxTalkTime) {
 
-            var next = this.talkQueue.shift();
+            let next = this.talkQueue.shift();
 
             if (next) {
                 this.talkText.setText(next);
@@ -259,7 +259,7 @@ export default class PlatformerLevel extends Level {
         this.player.unload(game);
         this.map.removeAllLayers();
 
-        var shape;
+        let shape;
 
         while (shape = this.geometry.pop()) {
             game.matter.world.remove(shape);
