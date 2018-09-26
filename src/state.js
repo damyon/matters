@@ -45,6 +45,13 @@ export default class State {
         return this.currentLevel;
     }
 
+    preloadTrophy(game, name, x, y) {
+        let trophy = new Trophy(name, x, y);
+        trophy.preload(game);
+        trophy.setIsPreloaded(true);
+        this.allTrophies.push(trophy);
+    }
+
     preload(game) {
         let i = 0;
 
@@ -61,10 +68,8 @@ export default class State {
             }
         }
 
-        let trophy = new Trophy("door", 50, 50);
-        trophy.preload(game);
-        trophy.setIsPreloaded(true);
-        this.allTrophies.push(trophy);
+        this.preloadTrophy(game, "door", 50, 30);
+        this.preloadTrophy(game, "window", 100, 30);
     }
 
     update(game) {
