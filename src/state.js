@@ -12,7 +12,7 @@ export default class State {
         this.platformerLevels = [];
         this.platformerLevels[0] = new WelcomeLevel('welcome', "Welcome to my awesome island!", this, 80, 330);
 
-        this.platformerLevels[1] = new BeachLevel('beach', "Welcome to the beach.\nThese rocks would make a\ngreat floor for my house.", this, 180, 300);
+        this.platformerLevels[1] = new BeachLevel('beach', "Welcome to the beach. \nThe sun is warm and good.", this, 180, 300);
         this.platformerLevels[0].addNextLevel(this.platformerLevels[1]);
 
         this.currentLevel = this.mapLevel;

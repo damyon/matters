@@ -4,7 +4,7 @@ import Sprite from './sprite.js';
 export default class WelcomeLevel extends PlatformerLevel {
     constructor(name, description, state, x, y) {
         super(name, description, state, x, y);
-        this.levelFile = 'assets/levels/welcome/map.json';
+        this.levelFile = 'assets/levels/beach/map.json';
     }
 
     preload(game) {
@@ -16,8 +16,8 @@ export default class WelcomeLevel extends PlatformerLevel {
         if (!this.isTalking()) {
 
             if (this.player.getScore() < this.player.getTargetScore()) {
-                this.say("Hi! My name is Pete!");
-                this.say("If you collect 10 stars,");
+                this.say("Hi! My name is Paul!");
+                this.say("If you collect " + this.player.getTargetScore() + " stars,");
                 this.say("I'll give you a window!");
             } else {
                 this.say("Great!");
