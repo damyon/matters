@@ -1,7 +1,7 @@
 import PlatformerLevel from './platformerlevel.js';
 import Sprite from './sprite.js';
 
-export default class WelcomeLevel extends PlatformerLevel {
+export default class BeachLevel extends PlatformerLevel {
     constructor(name, description, state, x, y) {
         super(name, description, state, x, y);
         this.levelFile = 'assets/levels/beach/map.json';
@@ -25,7 +25,8 @@ export default class WelcomeLevel extends PlatformerLevel {
                 this.say("Here is your window!");
                 this.waitForTalking().then(function() {
                     this.state.collectTrophy("window", game);
-                    setTimeout(this.endLevel.bind(this, game), 1000);
+                    this.setCompleted(true);
+                    setTimeout(this.endLevel.bind(this, game), 500);
                 }.bind(this));
             }
             
@@ -37,7 +38,7 @@ export default class WelcomeLevel extends PlatformerLevel {
 
         // Custom character
         this.pirate = new Sprite("pirate");
-        this.pirate.setPosition(3800, 1080);
+        this.pirate.setPosition(3880, 1020);
         this.pirate.createSprite(game);
         this.pirate.createAnimations(game.anims);
         this.pirate.handlePlayerContact(this.contactPirate.bind(this, game));

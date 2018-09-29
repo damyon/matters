@@ -25,7 +25,8 @@ export default class WelcomeLevel extends PlatformerLevel {
                 this.say("Here is your door!");
                 this.waitForTalking().then(function() {
                     this.state.collectTrophy("door", game);
-                    setTimeout(this.endLevel.bind(this, game), 1000);
+                    this.setCompleted(true);
+                    setTimeout(this.endLevel.bind(this, game), 500);
                 }.bind(this));
             }
             

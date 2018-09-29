@@ -34,6 +34,10 @@ export default class PlatformerLevel extends Level {
         return this.completed;
     }
 
+    setCompleted(value) {
+        this.completed = value;
+    }
+
     say(text) {
         if (this.talkQueue.indexOf(text) == -1) {
            this.talkQueue.push(text);
