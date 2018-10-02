@@ -4,7 +4,7 @@ import Sprite from './sprite.js';
 export default class MountainLevel extends PlatformerLevel {
     constructor(name, description, state, x, y) {
         super(name, description, state, x, y);
-        this.levelFile = 'assets/levels/forest/map.json';
+        this.levelFile = 'assets/levels/mountain/map.json';
     }
 
     preload(game) {

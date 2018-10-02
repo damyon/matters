@@ -3,6 +3,8 @@ import PlatformerLevel from './platformerlevel.js';
 import WelcomeLevel from './welcomelevel.js'; 
 import BeachLevel from './beachlevel.js'; 
 import ForestLevel from './forestlevel.js'; 
+import MountainLevel from './mountainlevel.js'; 
+import VillageLevel from './villagelevel.js'; 
 import Trophy from './trophy.js';
 
 export default class State {
@@ -15,8 +17,8 @@ export default class State {
 
         this.platformerLevels[1] = new BeachLevel('beach', "Welcome to the beach. \nThe sun is warm and good.", this, 180, 300);
         this.platformerLevels[2] = new ForestLevel('forest', "Welcome to the forest. \nThe forest is cool and shady", this, 260, 300);
-        this.platformerLevels[3] = new ForestLevel('mountain', "Welcome to the mountain. \nRocks, rocks rocks.", this, 380, 240);
-        this.platformerLevels[4] = new ForestLevel('village', "Welcome to the village. \nI want a house here.", this, 460, 320);
+        this.platformerLevels[3] = new MountainLevel('mountain', "Welcome to the mountain. \nRocks, rocks rocks.", this, 380, 240);
+        this.platformerLevels[4] = new VillageLevel('village', "Welcome to the village. \nI want a house here.", this, 460, 320);
         this.platformerLevels[0].addNextLevel(this.platformerLevels[1]);
         this.platformerLevels[1].addNextLevel(this.platformerLevels[2]);
         this.platformerLevels[2].addNextLevel(this.platformerLevels[3]);
