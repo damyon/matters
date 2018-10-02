@@ -6,8 +6,14 @@ export default class MapLevel extends Level {
         game.load.image('mapplayer', 'assets/mainmenu/mapplayer.png');
     }
 
+    getTime() {
+        let d = new Date();
+        return d.getTime();
+    }
+
     createInput(game) {
         let codes = Phaser.Input.Keyboard.KeyCodes;
+        this.lastInput = this.getTime();
 
         this.keys = game.input.keyboard.addKeys({
             left: codes.LEFT,
@@ -114,23 +120,28 @@ export default class MapLevel extends Level {
     }
 
     update(game) {
+        let currentTime = this.getTime();
+        let active = (currentTime - this.lastInput) > 300;
 
-        if (this.keys.enter.isDown) {
+        if (this.keys.enter.isDown && active) {
             this.state.loadLevel(this.selectedLevel, game);
+            this.lastInput = this.getTime();
         }
 
-        if (this.keys.right.isDown) {
+        if (this.keys.right.isDown && active) {
             let next = this.selectedLevel.getNextLevels();
             if (next.length > 0) {
                 this.setSelectedLevel(next[0], game);
             }
+            this.lastInput = this.getTime();
         }
 
-        if (this.keys.left.isDown) {
+        if (this.keys.left.isDown && active) {
             let previous = this.selectedLevel.getPreviousLevels();
             if (previous.length > 0) {
                 this.setSelectedLevel(previous[0], game);
             }
+            this.lastInput = this.getTime();
         }
     }
 }

@@ -1,7 +1,7 @@
 import PlatformerLevel from './platformerlevel.js';
 import Sprite from './sprite.js';
 
-export default class ForestLevel extends PlatformerLevel {
+export default class MountainLevel extends PlatformerLevel {
     constructor(name, description, state, x, y) {
         super(name, description, state, x, y);
         this.levelFile = 'assets/levels/forest/map.json';

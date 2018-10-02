@@ -1,7 +1,7 @@
 import PlatformerLevel from './platformerlevel.js';
 import Sprite from './sprite.js';
 
-export default class ForestLevel extends PlatformerLevel {
+export default class VillageLevel extends PlatformerLevel {
     constructor(name, description, state, x, y) {
         super(name, description, state, x, y);
         this.levelFile = 'assets/levels/forest/map.json';
@@ -14,22 +14,8 @@ export default class ForestLevel extends PlatformerLevel {
 
     contactPirate(game) {
         if (!this.isTalking()) {
-
-            if (this.player.getScore() < this.player.getTargetScore()) {
-                this.say("Hi! My name is Bob!");
-                this.say("If you collect " + this.player.getTargetScore() + " stars,");
-                this.say("I'll give you a roof!");
-            } else {
-                this.say("Great!");
-                this.say("You got all the stars.");
-                this.say("Here is your roof!");
-                this.waitForTalking().then(function() {
-                    this.state.collectTrophy("roof", game);
-                    this.setCompleted(true);
-                    setTimeout(this.endLevel.bind(this, game), 500);
-                }.bind(this));
-            }
-            
+            this.say("Hi! My name is Pete!");
+            this.say("Lets build a house.");
         }
     }
 
