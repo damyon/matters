@@ -38,7 +38,7 @@ export default class MountainLevel extends PlatformerLevel {
 
         // Custom character
         this.pirate = new Sprite("pirate");
-        this.pirate.setPosition(3880, 880);
+        this.pirate.setPosition(3940, 1020);
         this.pirate.createSprite(game);
         this.pirate.createAnimations(game.anims);
         this.pirate.handlePlayerContact(this.contactPirate.bind(this, game));

@@ -80,6 +80,7 @@ export default class State {
 
         this.preloadTrophy(game, "door", 50, 30);
         this.preloadTrophy(game, "window", 100, 30);
+        this.preloadTrophy(game, "roof", 150, 30);
     }
 
     update(game) {
