@@ -4,7 +4,7 @@ export default class PlatformerPlayer extends Player {
 
     createSprite(game) {
         let options = {
-            shape: { type: 'rectangle', x: 0, y: 0, width:30, height:50 },
+            shape: { type: 'rectangle', x: 0, y: 0, width:30, height:50},
             label: 'Platformer Player'
         };
         this.playerSpriteOffset = 55;
@@ -174,8 +174,15 @@ export default class PlatformerPlayer extends Player {
             this.endLevel = true;
         }
         if (player != null && ground != null) {
-            if (player.position.y < (ground.position.y) && (ground.bounds.min.x <= player.position.x <= ground.bounds.max.x)) {
+            if ((player.position.y < ground.position.y) &&
+                    (ground.bounds.min.x <= player.position.x) && 
+                    (player.position.x <= ground.bounds.max.x)) {
                 // Valid ground contact.
+                console.log('update last standing');
+                console.log(player.position);
+                console.log(ground.position);
+                console.log(ground.bounds.min);
+                console.log(ground.bounds.max);
                 this.lastStanding = { x: player.position.x, y: player.position.y };
             }
         }
