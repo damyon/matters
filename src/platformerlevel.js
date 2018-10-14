@@ -19,7 +19,6 @@ export default class PlatformerLevel extends Level {
     }
 
     getCharacterPosition(index) {
-        console.log(this.characterPositions);
         if (index in this.characterPositions) {
             return this.characterPositions[index];
         }
