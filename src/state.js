@@ -77,9 +77,10 @@ export default class State {
             }
         }
 
-        this.preloadTrophy(game, "door", 50, 30);
-        this.preloadTrophy(game, "window", 100, 30);
-        this.preloadTrophy(game, "roof", 150, 30);
+        this.preloadTrophy(game, "door", 100, 30);
+        this.preloadTrophy(game, "window", 150, 30);
+        this.preloadTrophy(game, "roof", 200, 30);
+        this.preloadTrophy(game, "walls", 50, 30);
     }
 
     update(game) {
@@ -105,6 +106,10 @@ export default class State {
                 this.trophiesCollected.push(match);
             }
         }
+    }
+
+    countTrophies() {
+        return this.trophiesCollected.length;
     }
 
     create(game) {

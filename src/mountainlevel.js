@@ -16,15 +16,15 @@ export default class MountainLevel extends PlatformerLevel {
         if (!this.isTalking()) {
 
             if (this.player.getScore() < this.player.getTargetScore()) {
-                this.say("Hi! My name is Bob!");
+                this.say("Hi! It's me Pete again!");
                 this.say("If you collect " + this.player.getTargetScore() + " stars,");
-                this.say("I'll give you a roof!");
+                this.say("I'll give you a door!");
             } else {
                 this.say("Great!");
                 this.say("You got all the stars.");
-                this.say("Here is your roof!");
+                this.say("Here is your door!");
                 this.waitForTalking().then(function() {
-                    this.state.collectTrophy("roof", game);
+                    this.state.collectTrophy("door", game);
                     this.setCompleted(true);
                     setTimeout(this.endLevel.bind(this, game), 500);
                 }.bind(this));

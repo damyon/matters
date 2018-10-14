@@ -18,13 +18,13 @@ export default class WelcomeLevel extends PlatformerLevel {
             if (this.player.getScore() < this.player.getTargetScore()) {
                 this.say("Hi! My name is Pete!");
                 this.say("If you collect 10 stars,");
-                this.say("I'll give you a door!");
+                this.say("I'll give you some walls!");
             } else {
                 this.say("Great!");
                 this.say("You got all the stars.");
-                this.say("Here is your door!");
+                this.say("Here are your walls!");
                 this.waitForTalking().then(function() {
-                    this.state.collectTrophy("door", game);
+                    this.state.collectTrophy("walls", game);
                     this.setCompleted(true);
                     setTimeout(this.endLevel.bind(this, game), 500);
                 }.bind(this));

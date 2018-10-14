@@ -157,7 +157,7 @@ export default class PlatformerLevel extends Level {
                     index = tile.index - tile.tileset.firstgid;
                     this.characterPositions[index] = {
                         x: (tileSize * i) - tileSize,
-                        y: (tileSize * j)
+                        y: (tileSize * j) + 12
                     };
                 }
             }
@@ -211,6 +211,7 @@ export default class PlatformerLevel extends Level {
         this.player = new PlatformerPlayer('player');
 
         this.createGeometry(game);
+        this.createImages(game);
         this.player.createSprite(game);
         this.player.on('scoreUpdated', this.updateScoreText.bind(this));
        
@@ -226,6 +227,9 @@ export default class PlatformerLevel extends Level {
 
         this.createUI(game);
         this.updateScoreText();
+    }
+
+    createImages(game) {
     }
 
     endLevel(game) {

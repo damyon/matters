@@ -16,7 +16,7 @@ export default class BeachLevel extends PlatformerLevel {
         if (!this.isTalking()) {
 
             if (this.player.getScore() < this.player.getTargetScore()) {
-                this.say("Hi! My name is Paul!");
+                this.say("Hi! It's me Pete again!");
                 this.say("If you collect " + this.player.getTargetScore() + " stars,");
                 this.say("I'll give you a window!");
             } else {
