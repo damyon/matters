@@ -33,7 +33,6 @@ export default class State {
     }
 
     loadLevel(levelToLoad, game) {
-        console.log(levelToLoad);
         this.currentLevel.unload(game);
 
         this.currentLevel = levelToLoad;

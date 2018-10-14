@@ -178,11 +178,6 @@ export default class PlatformerPlayer extends Player {
                     (ground.bounds.min.x <= player.position.x) && 
                     (player.position.x <= ground.bounds.max.x)) {
                 // Valid ground contact.
-                console.log('update last standing');
-                console.log(player.position);
-                console.log(ground.position);
-                console.log(ground.bounds.min);
-                console.log(ground.bounds.max);
                 this.lastStanding = { x: player.position.x, y: player.position.y };
             }
         }

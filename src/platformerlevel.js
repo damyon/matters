@@ -9,12 +9,21 @@ export default class PlatformerLevel extends Level {
         // tiles in spritesheet 
         game.load.spritesheet('tiles', 'assets/maps/tiles.png', {frameWidth: 70, frameHeight: 70, spacing: 2, margin: 0});
         game.load.spritesheet('rewards', 'assets/sprites/star/star.png', {frameWidth: 72, frameHeight: 72});
+        game.load.spritesheet('characters', 'assets/sprites/characters/empty.png', {frameWidth: 64, frameHeight: 64, spacing: 0, margin: 0});
       
         game.load.atlas('player', 'assets/sprites/player/sheet.png', 'assets/sprites/player/sprites.json');
     }
 
     getNextLevels() {
         return this.nextLevels;
+    }
+
+    getCharacterPosition(index) {
+        console.log(this.characterPositions);
+        if (index in this.characterPositions) {
+            return this.characterPositions[index];
+        }
+        return { x: 0, y: 0 };
     }
 
     getPreviousLevels() {
@@ -136,10 +145,30 @@ export default class PlatformerLevel extends Level {
         }
     }
 
+    storeCharacterPositions(layer, game) {
+        let i, j, tileSize = 72, index;
+
+        for (i = 0; i < layer.width; i++) {
+            for (j = 0; j < layer.height; j++) {
+                // Is set
+                let tile = layer.getTileAt(i, j, true);
+
+                if (tile && tile.index >= 0) {
+                    index = tile.index - tile.tileset.firstgid;
+                    this.characterPositions[index] = {
+                        x: (tileSize * i) - tileSize,
+                        y: (tileSize * j)
+                    };
+                }
+            }
+        }
+    }
+
     createGeometry(game) {
         // Map create
         let groundTiles = this.map.addTilesetImage('tiles');
         let rewardTiles = this.map.addTilesetImage('rewards');
+        let characterTiles = this.map.addTilesetImage('characters');
     
         this.geometry = [];
         // create the layers
@@ -148,6 +177,7 @@ export default class PlatformerLevel extends Level {
         this.lavaLayer = this.map.createStaticLayer('Lava', groundTiles, 0, 0);
         this.platformLayer = this.map.createStaticLayer('Platforms', groundTiles, 0, 0);
         this.rewardLayer = this.map.createDynamicLayer('Rewards', rewardTiles, 0, 0)
+        this.characterLayer = this.map.createDynamicLayer('Characters', characterTiles, 0, 0)
         
         let groundOptions = {isStatic: true, label: this.groundLabel};
         this.createBlocks(this.groundLayer, groundOptions, game);
@@ -160,6 +190,8 @@ export default class PlatformerLevel extends Level {
 
         let rewardOptions = {isStatic: true, label: this.rewardLabel};
         this.createBlocks(this.rewardLayer, rewardOptions, game);
+
+        this.storeCharacterPositions(this.characterLayer, game);
 
         // prevent access outside of world.
         
@@ -274,11 +306,13 @@ export default class PlatformerLevel extends Level {
         super(name, state);
         this.groundLabel = 'Ground block';
         this.lavaLabel = 'Lava block';
+        this.characterLabel = 'Character block';
         this.platformLabel = 'Platform block';
         this.rewardLabel = 'Reward block';
         this.description = description;
         this.nextLevels = [];
         this.previousLevels = [];
+        this.characterPositions = [];
         this.completed = false;
         this.x = x;
         this.y = y;
