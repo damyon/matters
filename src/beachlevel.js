@@ -35,10 +35,11 @@ export default class BeachLevel extends PlatformerLevel {
 
     create(game) {
         super.create(game);
-
+        let position = this.getCharacterPosition(0);
         // Custom character
         this.pirate = new Sprite("pirate");
-        this.pirate.setPosition(3880, 1020);
+        this.pirate.setPosition(position.x, position.y);
+
         this.pirate.createSprite(game);
         this.pirate.createAnimations(game.anims);
         this.pirate.handlePlayerContact(this.contactPirate.bind(this, game));
