@@ -23,8 +23,8 @@ export default class VillageLevel extends PlatformerLevel {
 
     contactPirate(game) {
         if (!this.isTalking()) {
-            if (true) {
-            // if (this.state.countTrophies() >= 4) {
+            // if (true) {
+            if (this.state.countTrophies() >= 4) {
                 this.say("Lets build your house!");
                 this.buildHouse(game);
                 this.waitForTalking().then(function() {
