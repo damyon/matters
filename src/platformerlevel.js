@@ -12,6 +12,8 @@ export default class PlatformerLevel extends Level {
         game.load.spritesheet('characters', 'assets/sprites/characters/empty.png', {frameWidth: 64, frameHeight: 64, spacing: 0, margin: 0});
       
         game.load.atlas('player', 'assets/sprites/player/sheet.png', 'assets/sprites/player/sprites.json');
+        game.load.audio('jumpAudio', ['assets/sounds/jump.ogg', 'assets/sounds/jump.mp3']);
+        game.load.audio('starAudio', ['assets/sounds/star.ogg', 'assets/sounds/star.mp3']);
     }
 
     getNextLevels() {

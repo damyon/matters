@@ -14,6 +14,8 @@ export default class PlatformerPlayer extends Player {
 
         game.matter.world.on('collisionstart', this.collisionStart, this);
         game.matter.world.on('collisionactive', this.collisionActive, this);
+        this.jumpSound = game.sound.add('jumpAudio');
+        this.starSound = game.sound.add('starAudio');
     }
 
     isStanding() {
@@ -36,6 +38,7 @@ export default class PlatformerPlayer extends Player {
         if (match == null) {
             this.rewardsCollected.push(tile);
             this.sprite.emit('scoreUpdated', this);
+            this.starSound.play();
         }
     }
 
@@ -211,6 +214,7 @@ export default class PlatformerPlayer extends Player {
         if (input.up.isDown && standing) {
             this.sprite.setVelocityY(-10);
             this.sprite.anims.play('jump', true); // play jump animation
+            this.jumpSound.play();
         } else if (input.left.isDown) {
             this.sprite.setVelocityX(-3); // move left
             if (standing) {
