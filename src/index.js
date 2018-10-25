@@ -26,10 +26,6 @@ let player = null;
 function preload ()
 {
     state.preload(this);
-    /*
-    console.log('load audio');
-    this.load.audio('jumpAudio', ['assets/sounds/jump.ogg', 'assets/sounds/jump.mp3']);
-    */
 }
 
 function update() {
@@ -40,9 +36,4 @@ function update() {
 function create ()
 {
     state.create(this);
-    /*
-    let j = this.sound.add('jumpAudio');
-    console.log('play audio');
-    j.play();
-    */
 }

@@ -89,8 +89,10 @@ export default class PlatformerLevel extends Level {
     }
 
     updateScoreText() {
-        let s = this.player.getScoreText();
-        this.scoreText.setText(s);
+        try {
+            let s = this.player.getScoreText();
+            this.scoreText.setText(s);
+        } catch (Exception) {}
     }
 
     createInput(game) {
@@ -155,9 +157,9 @@ export default class PlatformerLevel extends Level {
                 let tile = layer.getTileAt(i, j, true);
 
                 if (tile && tile.index >= 0) {
-                    index = tile.index - tile.tileset.firstgid;
+                    index = tile.index - tile.tileset[0].firstgid;
                     this.characterPositions[index] = {
-                        x: (tileSize * i) - tileSize,
+                        x: (tileSize * i) + tileSize,
                         y: (tileSize * j) + 12
                     };
                 }
