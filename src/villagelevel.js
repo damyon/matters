@@ -27,9 +27,11 @@ export default class VillageLevel extends PlatformerLevel {
             if (this.state.countTrophies() >= 4) {
                 this.say("Lets build your house!");
                 this.buildHouse(game);
+                this.say("You finished this game!");
                 this.waitForTalking().then(function() {
                     this.setCompleted(true);
-                    setTimeout(this.endLevel.bind(this, game), 10000);
+                    // setTimeout(this.endLevel.bind(this, game), 10000);
+                    setTimeout(function() {window.location.reload();}, 10000);
                 }.bind(this));
             } else {
                 this.say("Hi! It's me Pete again!");

@@ -174,6 +174,7 @@ export default class PlatformerLevel extends Level {
         this.geometry = [];
         // create the layers
         this.backgroundLayer = this.map.createStaticLayer('Background', groundTiles, 0, 0);
+        this.backgroundLayer2 = this.map.createStaticLayer('Background2', groundTiles, 0, 0);
         this.groundLayer = this.map.createStaticLayer('Ground', groundTiles, 0, 0);
         this.lavaLayer = this.map.createStaticLayer('Lava', groundTiles, 0, 0);
         this.platformLayer = this.map.createStaticLayer('Platforms', groundTiles, 0, 0);
@@ -265,7 +266,7 @@ export default class PlatformerLevel extends Level {
         }
 
         // Talk a bunch!
-        let maxTalkTime = 3000;
+        let maxTalkTime = 2000;
         if ((Date.now() - this.startTalkTime) > maxTalkTime) {
 
             let next = this.talkQueue.shift();
