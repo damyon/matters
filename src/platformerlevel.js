@@ -204,6 +204,7 @@ export default class PlatformerLevel extends Level {
 
     create(game) {
         this.fillBackground(game);
+        super.create(game);
         this.score = 0;
         this.startTalkTime = 0;
 
@@ -260,10 +261,10 @@ export default class PlatformerLevel extends Level {
     }
 
     update(game) {
-        this.player.update(game, this.cursors);
-        
+        this.player.update(game, this.cursors, this);
+
         // Exit the level.
-        if (this.cursors.escape.isDown || this.player.levelEnded()) {
+        if (this.cursors.escape.isDown || this.cancelDown || this.player.levelEnded()) {
             this.endLevel(game);
         }
 

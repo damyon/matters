@@ -22,6 +22,26 @@ export default class MapLevel extends Level {
             up: codes.UP,
             enter: codes.ENTER
         });
+
+ //       game.input.on('pointerdown', this.fakeKeyboard.bind(this));
+    }
+
+    notfakeKeyboard(pointer, image) {
+        if (image.length < 1) {
+            return;
+        }
+        if (image[0].name == "controlright") {
+            this.keys.right.isDown = true;
+        }
+        if (image[0].name == "controlleft") {
+            this.keys.left.isDown = true;
+        }
+        if (image[0].name == "controlup") {
+            this.keys.up.isDown = true;
+        }
+        if (image[0].name == "controlenter") {
+            this.keys.enter.isDown = true;
+        }
     }
 
     createUI(game) {
@@ -88,6 +108,7 @@ export default class MapLevel extends Level {
     }
 
     create(game) {
+        super.create(game);
         this.loadSelectedLevel();
 
         this.backGroundImage = game.add.image(0, 0, 'mainmap');
@@ -116,28 +137,32 @@ export default class MapLevel extends Level {
             
         this.backGroundImage.destroy();
         this.infoText.destroy();
-           
+        
     }
 
     update(game) {
         let currentTime = this.getTime();
         let active = (currentTime - this.lastInput) > 300;
 
-        if (this.keys.enter.isDown && active) {
+        if ((this.keys.enter.isDown || this.enterDown) && active) {
+            this.enterDown = false;
             this.state.loadLevel(this.selectedLevel, game);
             this.lastInput = this.getTime();
         }
 
-        if (this.keys.right.isDown && active) {
+        if ((this.keys.right.isDown || this.rightDown) && active) {
             let next = this.selectedLevel.getNextLevels();
+            this.rightDown = false;
             if (next.length > 0) {
                 this.setSelectedLevel(next[0], game);
             }
             this.lastInput = this.getTime();
         }
 
-        if (this.keys.left.isDown && active) {
+        if ((this.keys.left.isDown || this.leftDown) && active) {
+            let next = this.selectedLevel.getNextLevels();
             let previous = this.selectedLevel.getPreviousLevels();
+            this.leftDown = false;
             if (previous.length > 0) {
                 this.setSelectedLevel(previous[0], game);
             }

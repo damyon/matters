@@ -207,21 +207,21 @@ export default class PlatformerPlayer extends Player {
         return this.sprite;
     }
 
-    update(game, input) {
+    update(game, input, level) {
         this.sprite.setAngularVelocity(0);
         // Input update
         let standing = this.isStanding();
-        if (input.up.isDown && standing) {
+        if ((input.up.isDown || level.upDown) && standing) {
             this.sprite.setVelocityY(-10);
             this.sprite.anims.play('jump', true); // play jump animation
             this.jumpSound.play();
-        } else if (input.left.isDown) {
+        } else if (input.left.isDown || level.leftDown) {
             this.sprite.setVelocityX(-3); // move left
             if (standing) {
                 this.sprite.anims.play('walk', true); // play walk animation
             }
             this.sprite.flipX = true; // flip the sprite to the left
-        } else if (input.right.isDown) {
+        } else if (input.right.isDown || level.rightDown) {
             this.sprite.setVelocityX(3); // move right
             if (standing) {
                 this.sprite.anims.play('walk', true); // play walk animation

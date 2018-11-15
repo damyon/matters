@@ -6,6 +6,7 @@ import ForestLevel from './forestlevel.js';
 import MountainLevel from './mountainlevel.js'; 
 import VillageLevel from './villagelevel.js'; 
 import Trophy from './trophy.js';
+import Key from './key.js';
 
 export default class State {
 
@@ -44,6 +45,11 @@ export default class State {
         for (i = 0; i < this.trophiesCollected.length; i++) {
             this.trophiesCollected[i].create(game);
         }
+
+        for (i = 0; i < this.allKeys.length; i++) {
+            this.allKeys[i].create(game);
+        }
+
     }
 
     getPlatformerLevels() {
@@ -52,6 +58,13 @@ export default class State {
 
     getCurrentLevel() {
         return this.currentLevel;
+    }
+
+    preloadKey(game, name, x, y) {
+        let key = new Key(name, x, y);
+        key.preload(game);
+        key.setIsPreloaded(true);
+        this.allKeys.push(key);
     }
 
     preloadTrophy(game, name, x, y) {
@@ -81,6 +94,12 @@ export default class State {
         this.preloadTrophy(game, "window", 100, 30);
         this.preloadTrophy(game, "roof", 150, 30);
         this.preloadTrophy(game, "door", 200, 30);
+
+        this.preloadKey(game, "left", 620, 560);
+        this.preloadKey(game, "up", 680, 510);
+        this.preloadKey(game, "right", 740, 560);
+        this.preloadKey(game, "enter", 40, 560);
+        this.preloadKey(game, "cancel", 40, 40);
     }
 
     update(game) {
@@ -115,13 +134,21 @@ export default class State {
     create(game) {
         this.currentLevel.create(game);
 
+        
+        let i = 0;
+        for (i = 0; i < this.allKeys.length; i++) {
+            this.allKeys[i].create(game);
+        }
+
+
         // World create
- //       game.matter.world.createDebugGraphic();
+        // game.matter.world.createDebugGraphic();
     }
 
     constructor() {
         this.trophiesCollected = [];
         this.allTrophies = [];
+        this.allKeys = [];
         this.createLevels();
 
     }

@@ -25,7 +25,7 @@ export default class Player {
         
     }
 
-    update(game, input) {
+    update(game, input, level) {
         throw new TypeError("Abstract!");
     }
 
