@@ -30,3 +30,8 @@ assets/sprites/person1/clean.png
 assets/sprites/person1/sheet.png
 assets/sprites/player/sprites.json
 assets/sprites/player/sheet.png
+assets/controls/cancel.png
+assets/controls/enter.png
+assets/controls/left.png
+assets/controls/up.png
+assets/controls/right.png
